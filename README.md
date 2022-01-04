@@ -4,10 +4,16 @@
 - Did a previous dev make the whole product org use Youtrack because he used Intellij?
 
 If so, this is the plugin for you
-## Installation
+### Installation
+
+#### Packer:
 ```
   use {
     'trip-zip/youtrack',
     requires = {'trip-zip/plenary.nvim'} -- Just using the fork while we figure out the curl thing.
   }
 ```
+### Plug:
+```
+```
+### Configuration
