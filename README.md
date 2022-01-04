@@ -17,3 +17,14 @@ If so, this is the plugin for you
 ```
 ```
 ### Configuration
+
+### Developing:
+1) `git clone git@github.com:trip-zip/youtrack.git`
+2) Point packer at the local directory: `  
+```
+use {
+    '~/projects/youtrack',
+    requires = {'nvim-lua/plenary.nvim'}
+  }
+  ```
+3) Party in the USA.
