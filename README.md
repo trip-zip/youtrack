@@ -13,7 +13,7 @@ If so, this is the plugin for you
     requires = {'trip-zip/plenary.nvim'} -- Just using the fork while we figure out the curl thing.
   }
 ```
-### Plug:
+#### Plug:
 ```
 ```
 ### Configuration
