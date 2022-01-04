@@ -1,19 +1,19 @@
 local curl = require "plenary.curl"
-local env = require "youtrack.env"
+local token = vim.env.YOUTRACK_TOKEN
+local subdomain = vim.env.YOUTRACK_SUBDOMAIN
 
---Import these somehow.  Also make them global...
-local base_url = "https://" .. env.subdomain .. ".myjetbrains.com/youtrack/api/"
+local base_url = "https://" .. subdomain .. ".myjetbrains.com/youtrack/api/"
 local headers = {
   Accept = "application/json",
   ["Content-Type"] = "application/json",
-  Authorization = "Bearer " .. env.token,
+  Authorization = "Bearer " .. token,
 }
 
 local function list()
   local opts = {
     headers = headers,
     query = {
-      fields = "summary,idReadable,reporter(name),commentsCount,comments(author(name),text,created)",
+      fields = "summary,idReadable,reporter(name),commentsCount,comments(author(name),created)",
       query = "for: me #Unresolved",
       ["$top"] = 5,
     },
@@ -24,18 +24,22 @@ local function list()
 end
 --list()
 
-local function get(id)
+local function get()
+  local id = vim.fn.input "Enter issue id: "
+  if not id or id == "" then
+    error "No id provided"
+  end
   local opts = {
     headers = headers,
     query = {
-      fields = "summary,idReadable,reporter(name),commentsCount,comments(author(name),text,created)",
+      fields = "summary,idReadable,reporter(name),commentsCount,comments(author(name),created)",
     },
   }
   local res = curl.get(base_url .. "issues/" .. id, opts)
   vim.notify("Status: " .. tostring(res.status))
   print(vim.inspect(res.body))
 end
-get "GA-17640"
+--get()
 
 local function create()
   local opts = {
@@ -63,7 +67,22 @@ local function create()
 end
 --create()
 
-local function comment() end
+local function comment()
+  local id = vim.fn.input "Enter issue id: "
+  if not id or id == "" then
+    error "No id provided"
+  end
+  local opts = {
+    headers = headers,
+    body = vim.fn.json_encode {
+      text = vim.fn.input "Enter comment: ",
+    },
+  }
+  local res = curl.post(base_url .. "issues/" .. id .. "/comments", opts)
+  vim.notify("Status: " .. tostring(res.status))
+  print(vim.inspect(res.body))
+end
+--comment()
 
 local function close() end
 

@@ -20,6 +20,14 @@ If so, this is the plugin for you
 ```
 ```
 ### Configuration
+You must have both a youtrack permanent token and a youtrack subdomain set in your system enviromnent.  
+This plugin will attempt to pull them out of your env.
+
+So, set your env variables 
+`export=YOUTRACK_TOKEN=<token>`
+and
+`export=YOUTRACK_SUBDOMAIN=<subdomain>`
+
 
 ### Developing:
 1) `git clone git@github.com:trip-zip/youtrack.git`
