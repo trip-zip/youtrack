@@ -16,7 +16,7 @@ local function list()
   }
   local res = curl.get(base_url .. "admin/projects", opts)
   vim.notify("Status: " .. tostring(res.status))
-  print(vim.inspect(res.body))
+  return vim.fn.json_decode(res.body)
 end
 --list()
 
@@ -30,7 +30,7 @@ local function get()
   }
   local res = curl.get(base_url .. "admin/projects" .. id, opts)
   vim.notify("Status: " .. tostring(res.status))
-  print(vim.inspect(res.body))
+  return vim.fn.json_decode(res.body)
 end
 --get()
 

@@ -13,16 +13,17 @@ local function list()
   local opts = {
     headers = headers,
     query = {
-      fields = "summary,idReadable,reporter(name),commentsCount,comments(author(name),created)",
-      query = "for: me #Unresolved",
-      ["$top"] = 5,
+      fields = "summary,idReadable",
+      --fields = "summary,idReadable,reporter(name),commentsCount,comments(author(name),created)",
+      --query = "for: me #Unresolved",
+      ["$top"] = 50,
     },
   }
   local res = curl.get(base_url .. "issues", opts)
   vim.notify("Status: " .. tostring(res.status))
-  print(vim.inspect(res.body))
+  return vim.fn.json_decode(res.body)
 end
---list()
+list()
 
 local function get()
   local id = vim.fn.input "Enter issue id: "
@@ -37,7 +38,7 @@ local function get()
   }
   local res = curl.get(base_url .. "issues/" .. id, opts)
   vim.notify("Status: " .. tostring(res.status))
-  print(vim.inspect(res.body))
+  return vim.fn.json_decode(res.body)
 end
 --get()
 
